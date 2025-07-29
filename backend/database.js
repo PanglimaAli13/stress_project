@@ -1,53 +1,45 @@
-const sqlite3 = require('sqlite3').verbose();
-const DB_SOURCE = "db.sqlite";
+const { Pool } = require('pg');
 
-const db = new sqlite3.Database(DB_SOURCE, (err) => {
-    if (err) {
-      // Gagal membuat atau terhubung ke file database
-      console.error(err.message);
-      throw err;
-    } else {
-        console.log('Terhubung ke database SQLite.');
-        
-        // Membuat tabel 'users' jika belum ada
-        db.run(`
-            CREATE TABLE IF NOT EXISTS users (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                nama TEXT NOT NULL,
-                peran TEXT NOT NULL UNIQUE,
-                password TEXT NOT NULL,
-                avatarUrl TEXT 
-            )`, 
-        (err) => {
-            if (err) {
-                // Gagal membuat tabel
-                console.error("Gagal membuat tabel users:", err.message);
-            } else {
-                // Tambahkan data user contoh jika tabel baru berhasil dibuat
-                // 'INSERT OR IGNORE' mencegah error jika data sudah ada
-                const insert = 'INSERT OR IGNORE INTO users (nama, peran, password, avatarUrl) VALUES (?,?,?,?)';
-                db.run(insert, ["Administrator", "admin", "admin123", "https://i.pravatar.cc/150?u=admin"]);
-                db.run(insert, ["Manajer Proyek", "manager", "admin123", "https://i.pravatar.cc/150?u=manager"]);
-                db.run(insert, ["Pengembang", "developer", "admin123", "https://i.pravatar.cc/150?u=developer"]);
-                db.run(insert, ["Analis Sistem", "analyst", "admin123", "https://i.pravatar.cc/150?u=analyst"]);
-            }
-        });
+// ▼▼▼ PASTE CONNECTION STRING ANDA DARI SUPABASE DI SINI ▼▼▼
+const connectionString = 'postgresql://postgres:Vinolia1302!@db.otcmpktvbeqlfiefgvhh.supabase.co:5432/postgres';
+// ▲▲▲ PASTE CONNECTION STRING ANDA DARI SUPABASE DI SINI ▲▲▲
 
-        // Membuat tabel 'shipments' jika belum ada
-        db.run(`
-            CREATE TABLE IF NOT EXISTS shipments (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                userId INTEGER,
-                tanggal TEXT NOT NULL,
-                shipment TEXT NOT NULL UNIQUE,
-                jumlahToko INTEGER,
-                terkirim INTEGER,
-                gagal INTEGER,
-                alasan TEXT,
-                FOREIGN KEY (userId) REFERENCES users(id)
-            )`);
-    }
+const pool = new Pool({
+  connectionString,
 });
 
-// Ekspor koneksi database agar bisa digunakan di file server.js
-module.exports = db;
+const initializeDb = async () => {
+  try {
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS users (
+          id SERIAL PRIMARY KEY,
+          nama TEXT NOT NULL,
+          peran TEXT NOT NULL UNIQUE,
+          password TEXT NOT NULL,
+          avatarUrl TEXT
+      );
+    `);
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS shipments (
+          id SERIAL PRIMARY KEY,
+          userId INTEGER REFERENCES users(id),
+          tanggal DATE NOT NULL,
+          shipment TEXT NOT NULL UNIQUE,
+          jumlahToko INTEGER,
+          terkirim INTEGER,
+          gagal INTEGER,
+          alasan TEXT
+      );
+    `);
+    const insertUser = 'INSERT INTO users (nama, peran, password, avatarUrl) VALUES ($1, $2, $3, $4) ON CONFLICT (peran) DO NOTHING';
+    await pool.query(insertUser, ["Administrator", "admin", "admin123", "https://i.pravatar.cc/150?u=admin"]);
+    await pool.query(insertUser, ["Manajer Proyek", "manager", "admin123", "https://i.pravatar.cc/150?u=manager"]);
+    console.log("Database Supabase siap.");
+  } catch (err) {
+    console.error("Gagal menginisialisasi database:", err);
+  }
+};
+
+initializeDb();
+
+module.exports = pool;
