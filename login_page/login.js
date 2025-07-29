@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            fetch('http://localhost:3000/api/login', {
+            fetch('https://stress-project-omega.vercel.app/api/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ peran: peran, password: password })
