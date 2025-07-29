@@ -1,0 +1,288 @@
+/* Import font dari Google Fonts untuk tampilan yang lebih elegan */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+/* Reset dasar dan definisi variabel warna */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-teal: #4ecdc4;
+    --primary-red: #ff6b6b;
+    --text-color: #8d99ae;
+    --light-bg: #f7fff7;
+    --white: #ffffff;
+    --font-family: 'Poppins', sans-serif;
+    --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+/* Gaya untuk Body dengan latar belakang gambar */
+body {
+    font-family: var(--font-family);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url('background.jpg'); /* Pastikan path ini benar */
+    background-size: cover;
+    background-position: center;
+    padding: 20px;
+}
+
+/* Container utama dengan efek Glassmorphism */
+.login-container {
+    width: 100%;
+    max-width: 420px;
+    padding: 45px 35px;
+    background: rgba(255, 255, 255, 0.15); /* Transparansi untuk efek kaca */
+    backdrop-filter: blur(12px); /* Efek blur pada background */
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: var(--shadow);
+    color: var(--white);
+    text-align: center;
+}
+
+/* Header formulir */
+.login-header {
+    margin-bottom: 30px;
+}
+
+.login-title {
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 5px;
+}
+
+.login-subtitle {
+    font-size: 1rem;
+    font-weight: 300;
+    color: rgba(247, 255, 247, 0.8);
+}
+
+/* Grup formulir */
+.form-group {
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: rgba(247, 255, 247, 0.9);
+}
+
+/* Wrapper untuk input dan ikon */
+.input-wrapper {
+    position: relative;
+}
+
+.input-icon {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.1rem;
+    color: var(--text-color);
+    z-index: 1;
+}
+
+/* [PERBAIKAN UTAMA] Gaya untuk input dan select */
+select, input#password {
+    width: 100%;
+    padding: 14px 50px; /* Padding disesuaikan untuk ruang ikon di kiri dan kanan */
+    background-color: rgba(247, 255, 247, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    font-size: 1rem;
+    color: var(--white);
+    font-family: var(--font-family);
+    transition: var(--transition);
+    outline: none;
+    position: relative;
+}
+
+select {
+    padding-right: 20px; /* Padding khusus untuk select agar teks tidak menutupi panah dropdown */
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+/* Placeholder styling */
+input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* [PERBAIKAN UTAMA] Gaya saat input/select di-fokus */
+select:focus, input#password:focus {
+    border-color: var(--primary-teal);
+    background-color: rgba(247, 255, 247, 0.3);
+    box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.3);
+}
+
+/* Mengatur option di dalam select */
+select option {
+    background-color: #2c3e50; /* Warna gelap agar kontras */
+    color: var(--white);
+}
+
+/* Tombol toggle password */
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: 1.1rem;
+    padding: 5px;
+    z-index: 1;
+}
+
+.toggle-password:hover {
+    color: var(--primary-teal);
+}
+
+/* Tombol login utama */
+.login-btn {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    background-color: var(--primary-teal);
+    color: var(--white);
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-top: 15px;
+}
+
+.login-btn:hover {
+    background-color: #45b8af;
+    box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
+    transform: translateY(-2px);
+}
+
+/* Footer formulir */
+.login-footer {
+    margin-top: 25px;
+}
+
+.login-footer a {
+    color: rgba(247, 255, 247, 0.8);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: var(--transition);
+}
+
+.login-footer a:hover {
+    color: var(--primary-teal);
+    text-decoration: underline;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.modal-content {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 30px 40px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: var(--shadow);
+    text-align: center;
+    width: 90%;
+    max-width: 380px;
+    transform: scale(1);
+    transition: transform 0.3s ease;
+}
+
+.modal-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.modal-overlay.hidden .modal-content {
+    transform: scale(0.9);
+}
+
+.modal-icon {
+    font-size: 3rem;
+    line-height: 1;
+    margin-bottom: 15px;
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 10px;
+}
+
+.modal-message {
+    font-size: 1rem;
+    color: rgba(247, 255, 247, 0.8);
+    margin-bottom: 25px;
+}
+
+.modal-close-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    color: var(--white);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+/* [BARU] Gaya Khusus untuk Modal Error dan Sukses */
+.modal-icon.error {
+    color: var(--primary-red);
+}
+
+.modal-close-btn.error {
+    background-color: var(--primary-red);
+}
+
+.modal-close-btn.error:hover {
+    background-color: #e65252;
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+}
+
+.modal-icon.success {
+    color: var(--primary-teal);
+}
+
+.modal-close-btn.success {
+    background-color: var(--primary-teal);
+}
+
+.modal-close-btn.success:hover {
+    background-color: #45b8af;
+    box-shadow: 0 4px 15px rgba(78, 205, 196, 0.4);
+}
