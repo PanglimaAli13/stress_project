@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- FUNGSI ---
     function populateProfileData() {
         // Gabungkan URL server jika path gambar bersifat relatif
-        const serverUrl = "http://localhost:3000";
+        const serverUrl = "https://stress-project-omega.vercel.app";
         const avatarSrc = userProfileData.avatarUrl.startsWith('http') ? userProfileData.avatarUrl : serverUrl + userProfileData.avatarUrl;
         
         // Update semua gambar profil
@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
         formData.append('peran', userProfileData.role);
 
         try {
-            const response = await fetch('http://localhost:3000/api/avatar', {
+            const response = await fetch('https://stress-project-omega.vercel.app/api/avatar', {
                 method: 'POST',
                 body: formData,
             });
