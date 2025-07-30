@@ -1,0 +1,87 @@
+.profile-container {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    gap: var(--spacing);
+}
+
+.profile-header-card, .profile-details-card {
+    background: var(--bg-glass);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--border-radius);
+    padding: 30px;
+    box-shadow: var(--shadow);
+    backdrop-filter: var(--backdrop-blur);
+    -webkit-backdrop-filter: var(--backdrop-blur);
+}
+
+.profile-header-card {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+/* Gaya untuk edit foto profil */
+.profile-avatar-large-wrapper {
+    position: relative;
+    cursor: pointer;
+}
+
+.profile-avatar-large {
+    position: relative;
+    width: 120px;
+    height: 120px;
+}
+
+.profile-avatar-large img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 4px solid var(--primary-teal);
+    object-fit: cover;
+}
+
+.edit-avatar-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.profile-avatar-large-wrapper:hover .edit-avatar-overlay {
+    opacity: 1;
+}
+
+.profile-header-info h1 { font-size: 2.5rem; font-weight: 600; color: var(--text-color); }
+.profile-header-info p { font-size: 1.2rem; color: var(--text-muted); text-transform: capitalize; }
+.profile-details-card h2 { font-size: 1.5rem; font-weight: 500; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid var(--border-glass); }
+.detail-item { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid var(--border-glass); align-items: center; }
+.detail-item:last-child { border-bottom: none; }
+.detail-label { font-weight: 500; color: var(--text-muted); }
+.detail-value { font-weight: 500; color: var(--text-color); }
+.detail-value.link { color: var(--primary-teal); text-decoration: none; font-weight: 600; cursor: pointer; }
+.detail-value.link:hover { text-decoration: underline; }
+.profile-actions { margin-top: 30px; text-align: right; }
+.edit-profile-btn { background-color: var(--primary-teal); color: var(--white); border: none; border-radius: 12px; padding: 12px 24px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: var(--transition); }
+.edit-profile-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0, 201, 167, 0.3); }
+
+/* Gaya untuk Modal Detail Unit */
+.unit-details-content { display: grid; grid-template-columns: 1fr 2fr; gap: 25px; align-items: center; }
+.unit-photo img { width: 100%; border-radius: 12px; object-fit: cover; }
+
+@media (max-width: 768px) {
+    .profile-header-card { flex-direction: column; text-align: center; }
+    .profile-header-info h1 { font-size: 2rem; }
+    .detail-item { flex-direction: column; align-items: flex-start; gap: 5px; }
+    .unit-details-content { grid-template-columns: 1fr; }
+}
