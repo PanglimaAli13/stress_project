@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Elegant Glassmorphism</title>
+    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h1 class="login-title">Selamat Datang</h1>
+            <p class="login-subtitle">Masuk untuk melanjutkan</p>
+        </div>
+        <form id="loginForm" class="login-form">
+            <div class="form-group">
+                <label for="username">Peran Anda</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-user-shield input-icon"></i>
+                    <select id="username" required>
+                        <option value="" disabled selected>Pilih peran Anda</option>
+                        <option value="admin">Administrator</option>
+                        <option value="manager">Manajer Proyek</option>
+                        <option value="developer">Pengembang</option>
+                        <option value="analyst">Analis Sistem</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" id="password" placeholder="Masukkan password Anda" required>
+                    <button type="button" class="toggle-password" id="togglePassword"><i class="fas fa-eye"></i></button>
+                </div>
+            </div>
+            <button type="submit" class="login-btn">Masuk</button>
+        </form>
+        <div class="login-footer"><a href="#">Lupa password?</a></div>
+    </div>
+    <div id="errorModal" class="modal-overlay hidden"><div class="modal-content"><div class="modal-icon error"><span>⚠️</span></div><h2 class="modal-title">Autentikasi Gagal</h2><p class="modal-message">Password atau Peran tidak sesuai. Silakan coba lagi.</p><button id="closeErrorModal" class="modal-close-btn error">Tutup</button></div></div>
+    <div id="successModal" class="modal-overlay hidden"><div class="modal-content"><div class="modal-icon success"><span>✔️</span></div><h2 class="modal-title">Autentikasi Berhasil</h2><p class="modal-message">Anda akan segera diarahkan ke halaman dashboard.</p><button id="proceedToDashboard" class="modal-close-btn success">Lanjutkan</button></div></div>
+    <script src="login.js"></script>
+</body>
+</html>

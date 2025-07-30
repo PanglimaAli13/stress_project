@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
   confirmLogoutBtn.addEventListener('click', () => {
       logoutModal.classList.add('hidden');
       localStorage.clear();
-      window.location.href = 'login.html'; // Path relatif ke halaman login
+      window.location.href = 'index.html'; // Path relatif ke halaman login
   });
 
   shipmentForm.addEventListener('input', handleFormCalculation);
