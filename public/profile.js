@@ -1,18 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- Variabel & Konfigurasi ---
-    const backendUrl = 'https://stress-project-omega.vercel.app/api'; // URL Vercel Anda
+    const backendUrl = 'https://stress-project-omega.vercel.app/api';
+    const serverUrl = 'https://stress-project-omega.vercel.app';
     let userProfileData = {
         nama: localStorage.getItem('loggedInUser') || "Manajer Proyek",
         role: localStorage.getItem('userRole') || "manager",
         avatarUrl: localStorage.getItem('avatarUrl') || "https://i.pravatar.cc/150?u=a042581f4e29026704d",
-        // Data dummy lainnya
         email: "manager.proyek@email.com",
         telepon: "+62 812 3456 7890",
         alamat: "Jl. Teknologi No. 1, Surabaya",
         unit: "L 9134 CD"
     };
 
-    // --- Elemen DOM ---
     const sidebar = document.querySelector(".sidebar");
     const sidebarToggleBtn = document.querySelector("#btn-sidebar-toggle");
     const logoutBtn = document.getElementById('logoutBtn');
@@ -33,15 +31,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const mainProfileImg = document.getElementById('mainProfileImg');
     const sidebarProfileImg = document.getElementById('profileImg');
 
-    // --- Fungsi ---
     function populateProfileData() {
-        // Gabungkan URL server jika path gambar bersifat relatif
-        const serverUrl = 'https://stress-project-omega.vercel.app';
         const avatarSrc = userProfileData.avatarUrl.startsWith('http') ? userProfileData.avatarUrl : serverUrl + userProfileData.avatarUrl;
-        
         mainProfileImg.src = avatarSrc;
         sidebarProfileImg.src = avatarSrc;
-
         document.getElementById('profileName').textContent = userProfileData.nama;
         document.getElementById('profileRole').textContent = userProfileData.role;
         document.getElementById('mainProfileName').textContent = userProfileData.nama;
@@ -53,15 +46,13 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('unitLink').textContent = userProfileData.unit;
     }
 
-    // --- Event Listeners ---
     sidebarToggleBtn.addEventListener("click", () => sidebar.classList.toggle("open"));
-    
     logoutBtn.addEventListener('click', (e) => { e.preventDefault(); logoutModal.classList.remove('hidden'); });
     cancelLogoutBtn.addEventListener('click', () => logoutModal.classList.add('hidden'));
     confirmLogoutBtn.addEventListener('click', () => {
         logoutModal.classList.add('hidden');
         localStorage.clear();
-        window.location.href = 'index.html';
+        window.location.href = 'index.html'; // Path ke halaman login
     });
 
     editProfileShowModalBtn.addEventListener('click', () => {
@@ -74,7 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     cancelEditBtn.addEventListener('click', () => editProfileModal.classList.add('hidden'));
-
     editProfileForm.addEventListener('submit', (e) => {
         e.preventDefault();
         userProfileData.nama = document.getElementById('editNama').value;
@@ -92,7 +82,6 @@ document.addEventListener('DOMContentLoaded', () => {
     unitLink.addEventListener('click', (e) => { e.preventDefault(); unitDetailsModal.classList.remove('hidden'); });
     closeUnitModalBtn.addEventListener('click', () => unitDetailsModal.classList.add('hidden'));
 
-    // Logika untuk Edit Foto Profil
     avatarWrapper.addEventListener('click', () => {
         avatarUploadInput.click();
     });
@@ -100,16 +89,12 @@ document.addEventListener('DOMContentLoaded', () => {
     avatarUploadInput.addEventListener('change', async (event) => {
         const file = event.target.files[0];
         if (!file) return;
-
-        // Tampilkan pratinjau langsung
         const reader = new FileReader();
         reader.onload = e => {
             mainProfileImg.src = e.target.result;
             sidebarProfileImg.src = e.target.result;
         };
         reader.readAsDataURL(file);
-
-        // Kirim file ke server
         const formData = new FormData();
         formData.append('avatar', file);
         formData.append('peran', userProfileData.role);
@@ -120,7 +105,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: formData,
             });
             const result = await response.json();
-
             if (response.ok) {
                 localStorage.setItem('avatarUrl', result.avatarUrl);
                 userProfileData.avatarUrl = result.avatarUrl;
@@ -135,6 +119,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- INISIALISASI ---
     populateProfileData();
 });
