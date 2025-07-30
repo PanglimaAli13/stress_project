@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
     
-    // Ambil elemen-elemen DOM yang diperlukan
     const loginForm = document.getElementById('loginForm');
     const passwordInput = document.getElementById('password');
     const togglePassword = document.getElementById('togglePassword');
@@ -12,7 +11,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Alamat server backend Anda yang sudah online
     const backendUrl = 'https://stress-project-omega.vercel.app/api';
 
-    // Fungsi untuk menampilkan/menyembunyikan password
     if (togglePassword) {
         togglePassword.addEventListener('click', function() {
             const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
@@ -23,7 +21,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Fungsi saat form di-submit
     if (loginForm) {
         loginForm.addEventListener('submit', function(event) {
             event.preventDefault(); 
@@ -36,7 +33,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            // Mengirim data ke backend Vercel menggunakan fetch()
             fetch(`${backendUrl}/login`, {
                 method: 'POST',
                 headers: {
@@ -46,37 +42,34 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(response => response.json())
             .then(result => {
-                if (result.data) { // Jika backend mengirim data (artinya sukses)
-                    // Simpan info pengguna untuk digunakan di halaman lain
+                if (result.data) {
                     localStorage.setItem('loggedInUser', result.data.nama);
                     localStorage.setItem('userRole', result.data.peran);
-                    localStorage.setItem('avatarUrl', result.data.avatarUrl); // Simpan URL avatar
+                    localStorage.setItem('avatarUrl', result.data.avatarUrl);
                     successModal.classList.remove('hidden');
-                } else { // Jika backend mengirim error
+                } else {
                     errorModal.classList.remove('hidden');
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('Tidak dapat terhubung ke server. Pastikan server backend sudah berjalan.');
+                alert('Tidak dapat terhubung ke server. Silakan coba lagi nanti.');
             });
         });
     }
 
-    // Fungsi untuk menutup modal
     function hideErrorModal() {
         errorModal.classList.add('hidden');
     }
 
     function redirectToDashboard() {
         successModal.classList.add('hidden');
-        // Arahkan ke halaman dashboard (path relatif)
+        // Arahkan ke halaman dashboard (path relatif yang benar)
         setTimeout(() => {
             window.location.href = 'dashboard.html';
         }, 300);
     }
 
-    // --- Event Listeners untuk Modal ---
     if (closeErrorModal) {
         closeErrorModal.addEventListener('click', hideErrorModal);
     }
